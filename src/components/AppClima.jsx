@@ -5,14 +5,15 @@ import Spinner from "./Spinner"
 
 const AppClima = () => {
 
-  const { resultado, cargando } = useClima();
+  const { resultado, cargando, noResultados } = useClima();
 
   return (
     <>
         <main className="dos-columnas">
             <Formulario />
-            {cargando ? <Loading /> : 
-            resultado?.name && <Resultado /> }
+            {cargando ? <Spinner/> : 
+            resultado?.name ? <Resultado /> : noResultados ? <p>{noResultados}</p>
+            : <p>El Clima se va a mostrar aquí</p> }
             
         </main>
     </>

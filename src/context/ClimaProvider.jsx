@@ -13,6 +13,7 @@ const ClimaProvider = ({children})=>{
 
     const [resultado, setResultado] = useState({});
     const [cargando, setCargando] = useState(false);
+    const [noResultados, setNoResultados] = useState();
     
     const datosBusqueda = e => {
         setBusqueda({
@@ -23,6 +24,7 @@ const ClimaProvider = ({children})=>{
 
     const consultarClima = async datos => {
         setCargando(true);
+        setNoResultados(false);
         try{
             const { ciudad, pais } = datos;
 
@@ -39,10 +41,11 @@ const ClimaProvider = ({children})=>{
 
             setResultado(clima)
 
-            setCargando(false);
         }catch(error){
-            console.log(error)
-        } 
+            setNoResultados("No hay Resultados");
+        } finally {
+            setCargando(false);
+        }
        
     }
 
@@ -53,7 +56,8 @@ const ClimaProvider = ({children})=>{
                 datosBusqueda,
                 consultarClima,
                 resultado,
-                cargando
+                cargando,
+                noResultados
             }}
         >
             {children}
